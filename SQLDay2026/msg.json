@@ -1,0 +1,18 @@
+{                                                                
+             "message_header": {                                    
+               "message_id": "MSG-17762679610",                     
+               "timestamp": "2025-06-29 20:30:00.000",              
+               "source": "AMI-PL-200000064169"                      
+             },                                                     
+             "device_details": {                                    
+               "device_id": "AMI-PL-200000064169",                  
+               "meter_type": "Electricity_3Phase",                  
+               "firmware_version": "v2.4.1"                         
+             },                                                     
+             "readings": [                                          
+               { "obis_code": "1.8.0", "value": 39299.34422307054 },
+               { "obis_code": "21.7.0", "value": 0.05 },            
+               { "obis_code": "41.7.0", "value": 2.18 },            
+               { "obis_code": "61.7.0", "value": 2.08 }             
+             ]                                                      
+}   
