@@ -29,3 +29,23 @@ FROM system.columns
 WHERE `table` = 'ami_silver'
 GROUP BY name
 ```
+Mutation status
+```sql
+SELECT
+    `table`,
+    mutation_id,
+    command,
+    is_done,
+    parts_to_do,
+    parts_in_progress_names
+FROM system.mutations
+WHERE (`table` = 'ami_silver') AND (command LIKE '%MATERIALIZE PROJECTION%')
+ORDER BY create_time DESC
+```
+AGG Functions
+```sql
+SELECT name 
+FROM system.functions 
+WHERE is_aggregate = 1 
+ORDER BY name;
+```

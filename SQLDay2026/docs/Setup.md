@@ -6,6 +6,27 @@
 
 --------------------------------
 ## PostgreSQL
+```sql
+CREATE TABLE IF NOT EXISTS public.ppe_ami (
+    ppe varchar(50) NOT NULL,
+    ami varchar(255) NOT NULL,
+    trafo_nr varchar(50) NOT null,
+    CONSTRAINT pk_ppe_ami PRIMARY KEY (ppe, ami)
+);
+```
+```sql
+CREATE UNIQUE INDEX IF NOT EXISTS idx_unique_ppe_ami 
+ON public.ppe_ami (ppe, ami);
+```
+```sql
+INSERT INTO public.ppe_ami
+SELECT 
+    'PPE' || lpad(s.id::text, 6, '0'),
+    'AMI-PL-200000' || lpad(s.id::text, 6, '0'),
+    'TRAFO-' || lpad((floor(random() * 500) + 1)::text, 3, '0')
+FROM generate_series(1, 100000) AS s(id);
+```
+
 --------------------------------
 ## ClickHouse
 Create database
@@ -148,7 +169,10 @@ SELECT
 FROM ami_silver as s
 JOIN ppe_ami_dict AS d ON s.device_id = d.ami;
 ```
+
 ---
+## Gold PPE Billing
+![Data ingestion](img/gold_ppe_billing.png)
 Crate table ppe_billing
 * energy_usage -month-to-month growth
 ```sql
@@ -178,6 +202,9 @@ FROM ppe_usage_gold FINAL
 WHERE makeDate(year, month, 1) >= toStartOfMonth(makeDate(2025, 1, 1)) - INTERVAL 2 MONTH;
 ```
 ---
+## Gold PPE Stats
+![Data ingestion](img/gold_ppe_stats.png)
+
 Create table ppe_stats_gold
 
 | Column Name | Description |
